@@ -65,12 +65,13 @@
     <div id="graphDivOld" class="TestClass">
     </div>
 
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="https://raw.githubusercontent.com/skokenes/D3-Lasso-Plugin/master/lasso.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
 
     {% if data %}
     <script>
-      //<script src="https://d3js.org/d3.v4.min.js"><\/script>
+    //<script src="http://d3js.org/d3.v3.min.js"></\script>
+        //<script src="./static/lasso.js"<\/script>
 
       d3.selectAll(".TestClass")
         .on("mouseover", function() {
@@ -85,24 +86,21 @@
       var svgHeight = 270;
       var graphWidth = svgWidth - margin.left - margin.right;
       var graphHeight = svgHeight - margin.top - margin.bottom;
-      var parseDate = d3.time.format("%Y-%m-%d").parse;
-      var x = d3.time.scale().range([0, graphWidth]);
-      var y = d3.scale.linear().range([graphHeight, 0]);
-      d
-      var xAxis = d3.svg.axis().scale(x)
-        .orient("bottom").ticks(5);
-      var yAxis = d3.svg.axis().scale(y)
-        .orient("left").ticks(5);
-      var highLine = d3.svg.line()
+      var parseDate = d3.timeParse("%Y-%m-%d");
+      var x = d3.scaleTime().range([0, graphWidth]);
+      var y = d3.scaleLinear().range([graphHeight, 0]);
+      var xAxis = d3.axisBottom(x);
+      var yAxis = d3.axisLeft(y);
+      var highLine = d3.line()
         .x(function(d) { return x(d.Date); })
         .y(function(d) { return y(d.High); });
-      var closeLine = d3.svg.line()
+      var closeLine = d3.line()
         .x(function(d) { return x(d.Date); })
         .y(function(d) { return y(d.Close); });
-      var lowLine = d3.svg.line()
+      var lowLine = d3.line()
         .x(function(d) { return x(d.Date); })
         .y(function(d) { return y(d.Low); });
-      var area = d3.svg.area()
+      var area = d3.area()
         .x(function(d) { return x(d.Date); })
         .y0(function(d) { return y(d.Low); })
         .y1(function(d) { return y(d.High); })

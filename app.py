@@ -1,6 +1,5 @@
 import json
 import flask
-
 from flask import Flask, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -10,11 +9,13 @@ import flask
 import pandas as pd
 
 app = Flask(__name__)
-bootstrap = Bootstrap(app)
+app.debug = True
 app.config["SECRET_KEY"] = 'mystery'
 
+bootstrap = Bootstrap(app)
+
 class DataFile(FlaskForm):
-    name = StringField('File to load',validators=[Required()])
+    name = StringField('File to load', validators=[Required()])
     desc = StringField('Description')
     submit = SubmitField('Press go')
 
@@ -40,10 +41,10 @@ def index():
         desc = None
 
     return render_template("index.html",
-        filename_form=form,
-        data=session["data"],
-        data_old=session["data_old"],
-        desc=desc)
+                           filename_form=form,
+                           data=session["data"],
+                           data_old=session["data_old"],
+                           desc=desc)
 
 if __name__ == "__main__":
     app.run(debug=True)
